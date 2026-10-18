@@ -40,7 +40,7 @@ The project redesigned the data into **eight related tables**, documented as a 3
 - Update current product stock through an `AFTER INSERT` trigger on invoice details.
 - Retrieve a customer's invoice history with a stored procedure.
 
-See [database design and review notes](docs/FotoERD.png) for more detail.
+See [database design](docs/FotoERD.png) for more detail.
 
 ## How to reproduce (after adding original code)
 
