@@ -1,8 +1,6 @@
 # Tokopee — E-Commerce Relational Database
 
-A **Database Technology group project** at BINUS University (2025–2026). We analyzed a flat online-retail transaction dataset and designed a normalized relational model for customer orders, returns, and sales reporting.
-
-> **Repository status:** Documentation and the original ERD have been added from the project report. The **original SQL and Python scripts are not yet included** in this starter. Add and test the original source files before calling this a runnable project. This is an academic database demonstration, not a production platform.
+A **Database Technology group project** at BINUS University. We analyzed a flat online-retail transaction dataset and designed a normalized relational model for customer orders, returns, and sales reporting.
 
 ## Overview
 
