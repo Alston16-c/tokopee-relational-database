@@ -1,69 +1,85 @@
-# Tokopee — Relational E-Commerce Database
+# Tokopee — E-Commerce Relational Database
 
-A **university group project** for BINUS University's Database Technology course (2025–2026). The project explores how a flat online-retail transaction dataset can be transformed into a normalized relational database and used for order processing and sales reporting.
+A **Database Technology group project** at BINUS University (2025–2026). We analyzed a flat online-retail transaction dataset and designed a normalized relational model for customer orders, returns, and sales reporting.
 
-> **Repository status:** This is a documentation starter prepared from the original project report. **The original Python and SQL source files are not included yet.** Add and verify those files before presenting this repository as a complete runnable implementation. This is an academic demonstration, not a production commerce system.
+> **Repository status:** Documentation and the original ERD have been added from the project report. The **original SQL and Python scripts are not yet included** in this starter. Add and test the original source files before calling this a runnable project. This is an academic database demonstration, not a production platform.
 
-## Project highlights
+## Overview
 
-- Identified redundancy and insert, update, and delete anomalies in flat transaction data.
-- Designed a relational schema normalized through **third normal form (3NF)**.
-- Modeled customers, customer addresses, geographic data, products, invoices, and invoice line items.
-- Used **Python and Pandas** for data cleaning and deduplication; the report describes using **Faker** to generate synthetic address data.
-- Implemented SQL DDL/DML and analytical queries, including top customers by spending and monthly sales revenue.
-- Explored a stock-update trigger and a stored procedure to retrieve a customer's invoices.
+The source `online_retail_data.csv` contains invoices, stock codes, descriptions, quantities, dates, prices, customer IDs, and countries. Its flat structure repeats product and transaction information, leading to update, insertion, and deletion anomalies.
 
-## Data model
+The project redesigned the data into **eight related tables**, documented as a 3NF model, with explicit keys and referential integrity constraints.
 
-The design describes eight entities:
+![Original project ERD](docs/erd.png)
 
-| Entity | Purpose |
+| Table | Purpose |
 | --- | --- |
-| `Country` | Country reference data |
-| `Province` | Provinces belonging to countries |
-| `City` | Cities belonging to provinces |
-| `Customer` | Customer identity |
-| `CustomerAddress` | Customer-address and city associations |
-| `Product` | Product metadata, current price, and stock |
-| `Invoice` | Order or return header, customer, address, date, status, totals |
-| `InvoiceDetail` | Per-product line item; stores historical unit price |
+| `Country`, `Province`, `City` | Geographic reference hierarchy |
+| `Customer` | Customer profiles |
+| `CustomerAddress` | Customers' addresses and city links |
+| `Product` | Product codes, names, current prices, and stock |
+| `Invoice` | Order/return headers and statuses |
+| `InvoiceDetail` | Invoice line items and historical unit prices |
 
-See [entity relationships](docs/erd.md) and [design notes](docs/database-design.md).
+## Features documented in the original report
 
-## Processing workflow
+**Data preprocessing (Python / Pandas)**
+- Remove records missing essential customer or product information.
+- Standardize customer IDs, invoice dates, and text fields.
+- Merge repeated `(InvoiceID, StockCode)` entries by summing quantities.
+- Remove records with zero quantities.
+- Generate sample address/region values with Faker for the teaching dataset.
 
-1. **Input:** a retail transactions CSV with invoice, product, quantity, price, date, customer, and country fields.
-2. **Cleaning:** standardize identifiers and dates, remove missing essential values and zero-quantity records, deduplicate invoice/product pairs, and produce normalized import data.
-3. **Schema:** create entity tables and define keys and integrity constraints.
-4. **Operations:** insert products, represent purchases and returns, and calculate invoice amounts.
-5. **Reporting:** analyze customer spend and monthly sales.
-6. **Automation:** demonstrate stock-update and invoice-history database routines.
+**Database design and SQL**
+- Normalize the original flat-file structure into separate entities, following **3NF**.
+- Create tables with primary keys, foreign keys, `NOT NULL`, `DEFAULT`, and `CHECK` constraints.
+- Use `(InvoiceID, StockCode)` as the composite primary key for invoice line items.
+- Store historical `UnitPrice` in invoice details independently of a product's current price.
 
-The original source files are needed to reproduce these steps. Do not use the descriptions alone as proof that this repository is runnable.
+**Queries and automation**
+- Add new products; record purchases and customer returns.
+- Report the top 10 customers by completed-order spend and the highest-revenue month in 2011.
+- Update current product stock through an `AFTER INSERT` trigger on invoice details.
+- Retrieve a customer's invoice history with a stored procedure.
+
+See [database design and review notes](docs/database-design.md) for more detail.
 
 ## Repository structure
 
 ```text
-tokopee-relational-database/
+.
 ├── README.md
 ├── .gitignore
+├── data/
+│   └── README.md                 # Full 90 MB source data is not included
 ├── docs/
-│   ├── erd.md
-│   └── database-design.md
+│   ├── erd.png                   # ERD extracted from the original report
+│   ├── erd.md                    # Text description of relationships
+│   └── database-design.md       # Design and engineering notes
 ├── python/
-│   └── README.md          # Replace/add the original cleaning script
+│   └── README.md                 # Add original preprocessing scripts here
 └── sql/
-    └── README.md          # Add original schema, queries, trigger, procedure
+    └── README.md                 # Add original SQL files here
 ```
 
-## Technology
+## How to reproduce (after adding original code)
 
-**SQL**, **relational database design / 3NF**, **Python**, **Pandas**, and **Faker** (as described in the original coursework report). The SQL database engine and supported version should be documented after adding and testing the original SQL scripts.
+1. Obtain the source dataset from its authorized source; **do not assume the 90 MB CSV may be redistributed**.
+2. Run the original Python preprocessing script to generate normalized import files.
+3. Create the database using the original SQL schema script.
+4. Import the cleaned data in foreign-key dependency order.
+5. Execute the transaction examples, analytics queries, trigger, and stored procedure.
 
-## Engineering considerations
+The exact commands, supported MySQL/MariaDB version, and dependencies still need to be verified from the original scripts. The screenshots in the report use MySQL-style SQL syntax.
 
-This project was created for learning. A production implementation would need stronger control over transaction atomicity, historical order retention, secure data handling, and stock consistency. In particular, applying `ON DELETE CASCADE` indiscriminately to order-related tables can erase historical transaction records.
+## Production considerations
 
-## Attribution and sharing
+This was coursework. Before using these ideas in a real application, consider stricter transaction atomicity, historical order retention (the report describes widespread `ON DELETE CASCADE`), safe stock updates under concurrency, and separation of purchase versus return accounting.
 
-This was a **group project**, not an individual-only project. Credit the other contributors with their permission and describe your own contributions accurately. The original class report contains other people's names and coursework details; it is deliberately excluded from this public-ready template. Only publish project assets you have permission to share, and ensure any uploaded dataset is properly licensed and de-identified.
+## Acknowledgments
+
+This is a **group project**, not a solo project. Include attribution to the other group members with their permission, and clarify which parts you personally implemented when describing it on your CV. The submitted class report has intentionally not been included in this public starter because it contains names and course administration details.
+
+## Data policy
+
+The original 90 MB data file is intentionally excluded. Publish only small, properly licensed, non-sensitive examples if you choose to include sample data. Never upload credentials, private customer details, or unlicensed source datasets.
