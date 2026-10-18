@@ -41,25 +41,3 @@ The project redesigned the data into **eight related tables**, documented as a 3
 - Retrieve a customer's invoice history with a stored procedure.
 
 See [database design](docs/FotoERD.png) for more detail.
-
-## How to reproduce (after adding original code)
-
-1. Obtain the source dataset from its authorized source; **do not assume the 90 MB CSV may be redistributed**.
-2. Run the original Python preprocessing script to generate normalized import files.
-3. Create the database using the original SQL schema script.
-4. Import the cleaned data in foreign-key dependency order.
-5. Execute the transaction examples, analytics queries, trigger, and stored procedure.
-
-The exact commands, supported MySQL/MariaDB version, and dependencies still need to be verified from the original scripts. The screenshots in the report use MySQL-style SQL syntax.
-
-## Production considerations
-
-This was coursework. Before using these ideas in a real application, consider stricter transaction atomicity, historical order retention (the report describes widespread `ON DELETE CASCADE`), safe stock updates under concurrency, and separation of purchase versus return accounting.
-
-## Acknowledgments
-
-This is a **group project**, not a solo project. Include attribution to the other group members with their permission, and clarify which parts you personally implemented when describing it on your CV. The submitted class report has intentionally not been included in this public starter because it contains names and course administration details.
-
-## Data policy
-
-The original 90 MB data file is intentionally excluded. Publish only small, properly licensed, non-sensitive examples if you choose to include sample data. Never upload credentials, private customer details, or unlicensed source datasets.
