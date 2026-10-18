@@ -1,4 +1,3 @@
-# Keep raw data and private/group coursework documents out of the public repo
 *.env
 .env*
 !.env.example
@@ -9,14 +8,8 @@ venv/
 .ipynb_checkpoints/
 .DS_Store
 
-# Raw/generated data (commit only deliberately anonymized small samples)
 data/
 *.csv
 *.xlsx
 *.sqlite
 *.db
-
-# Local backups and academic reports with student information
-*.zip
-*.pdf
-*.docx
