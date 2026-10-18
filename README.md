@@ -10,8 +10,6 @@ The source `online_retail_data.csv` contains invoices, stock codes, descriptions
 
 The project redesigned the data into **eight related tables**, documented as a 3NF model, with explicit keys and referential integrity constraints.
 
-![Original project ERD](docs/erd.png)
-
 | Table | Purpose |
 | --- | --- |
 | `Country`, `Province`, `City` | Geographic reference hierarchy |
