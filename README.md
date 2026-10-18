@@ -40,25 +40,7 @@ The project redesigned the data into **eight related tables**, documented as a 3
 - Update current product stock through an `AFTER INSERT` trigger on invoice details.
 - Retrieve a customer's invoice history with a stored procedure.
 
-See [database design and review notes](docs/database-design.md) for more detail.
-
-## Repository structure
-
-```text
-.
-├── README.md
-├── .gitignore
-├── data/
-│   └── README.md                 # Full 90 MB source data is not included
-├── docs/
-│   ├── erd.png                   # ERD extracted from the original report
-│   ├── erd.md                    # Text description of relationships
-│   └── database-design.md       # Design and engineering notes
-├── python/
-│   └── README.md                 # Add original preprocessing scripts here
-└── sql/
-    └── README.md                 # Add original SQL files here
-```
+See [database design and review notes](docs/FotoERD.png) for more detail.
 
 ## How to reproduce (after adding original code)
 
